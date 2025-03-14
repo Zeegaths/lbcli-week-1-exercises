@@ -190,7 +190,8 @@ echo "Simple descriptor: $SIMPLE_DESCRIPTOR"
 
 # STUDENT TASK: Get a proper descriptor with checksum
 # WRITE YOUR SOLUTION BELOW:
-TAPROOT_DESCRIPTOR=$(bitcoin-cli -regtest getdescriptorinfo "$SIMPLE_DESCRIPTOR" | grep -o '"descriptor":"[^"]*"' | cut -d'"' -f4)
+TAPROOT_INFO=$(bitcoin-cli -regtest getdescriptorinfo "$SIMPLE_DESCRIPTOR")
+TAPROOT_DESCRIPTOR=$(echo "$TAPROOT_INFO" | grep -o '"descriptor":"[^"]*"' | cut -d'"' -f4)#$(echo "$TAPROOT_INFO" | grep -o '"checksum":"[^"]*"' | cut -d'"' -f4)
 check_cmd "Descriptor generation"
 TAPROOT_DESCRIPTOR=$(trim "$TAPROOT_DESCRIPTOR")
 echo "Taproot treasure map: $TAPROOT_DESCRIPTOR"
