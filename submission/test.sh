@@ -177,7 +177,8 @@ check_cmd "Getting address info"
 
 # STUDENT TASK: Extract the internal key (the x-only pubkey) from the descriptor
 # WRITE YOUR SOLUTION BELOW:
-INTERNAL_KEY=$(echo "$ADDR_INFO" | grep -o '"pubkey":"[^"]*"' | cut -d'"' -f4)
+DESC=$(echo "$ADDR_INFO" | grep -o '"desc" *: *"[^"]*"' | cut -d':' -f2- | tr -d ' "')
+INTERNAL_KEY=$(echo "$DESC" | sed -n 's/^tr(\([^)]*\)).*$/\1/p')
 check_cmd "Extracting key from descriptor"
 INTERNAL_KEY=$(trim "$INTERNAL_KEY")
 
